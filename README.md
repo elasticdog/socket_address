@@ -61,7 +61,7 @@ iex> socket_address.port
 80
 
 iex> SocketAddress.new("100.200.300.400", 80)
-{:error, :invalid_ip_address}
+{:error, :invalid_ip}
 
 iex> SocketAddress.new("0.0.0.0", 99999)
 {:error, :invalid_port}

@@ -44,20 +44,20 @@ defmodule SocketAddress do
       80
 
       iex> SocketAddress.new("100.200.300.400", 80)
-      {:error, :invalid_ip_address}
+      {:error, :invalid_ip}
 
       iex> SocketAddress.new("0.0.0.0", 99999)
       {:error, :invalid_port}
   """
   @spec new(ip_address, port_number) ::
     {:ok, t} |
-    {:error, :invalid_ip_address | :invalid_port}
+    {:error, :invalid_ip | :invalid_port}
   def new(ip, port) do
     ip_address = parse(ip)
 
     cond do
       ip_address == nil ->
-        {:error, :invalid_ip_address}
+        {:error, :invalid_ip}
       Enum.member?(@valid_ports, port) == false ->
         {:error, :invalid_port}
       true ->
