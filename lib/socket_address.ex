@@ -24,18 +24,17 @@ defmodule SocketAddress do
   @doc """
   Creates a new socket address with the given `ip` and `port`.
 
-  Returns `{:ok, socket}` if the IP address and port number are valid, returns
+  Returns a socket address if the IP address and port number are valid, returns
   `{:error, reason}` otherwise. A valid IP address is anything that can be
   parsed by `:inet.parse_address/1`, and a valid port must be an integer in the
   range of `#{inspect @valid_ports}`.
 
   ## Examples
 
-      iex> {:ok, socket} = SocketAddress.new("127.0.0.1", 80)
-      iex> socket
+      iex> SocketAddress.new("127.0.0.1", 80)
       #SocketAddress<127.0.0.1:80>
 
-      iex> {:ok, socket} = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
+      iex> socket = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
       iex> socket
       #SocketAddress<[FE80::204:ACFF:FE17:BF38]:80>
       iex> socket.ip
@@ -50,7 +49,7 @@ defmodule SocketAddress do
       {:error, :invalid_port}
   """
   @spec new(ip_address, port_number) ::
-    {:ok, t} |
+    t |
     {:error, :invalid_ip | :invalid_port}
   def new(ip, port) do
     ip_address = parse(ip)
@@ -61,7 +60,7 @@ defmodule SocketAddress do
       Enum.member?(@valid_ports, port) == false ->
         {:error, :invalid_port}
       true ->
-        {:ok, %SocketAddress{ip: ip_address, port: port}}
+        %SocketAddress{ip: ip_address, port: port}
     end
   end
 

@@ -48,11 +48,10 @@ Usage
 -----
 
 ```elixir
-iex> {:ok, socket} = SocketAddress.new("127.0.0.1", 80)
-iex> socket
+iex> SocketAddress.new("127.0.0.1", 80)
 #SocketAddress<127.0.0.1:80>
 
-iex> {:ok, socket} = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
+iex> socket = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
 iex> socket
 #Socket<[FE80::204:ACFF:FE17:BF38]:80>
 iex> socket.ip
