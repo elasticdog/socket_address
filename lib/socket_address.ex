@@ -24,23 +24,23 @@ defmodule SocketAddress do
   @doc """
   Creates a new socket address with the given `ip` and `port`.
 
-  Returns `{:ok, socket_address}` if the IP address and port number are valid,
-  returns `{:error, reason}` otherwise. A valid IP address is anything that can
-  be parsed by `:inet.parse_address/1`, and a valid port must be an integer in
-  the range of `#{inspect @valid_ports}`.
+  Returns `{:ok, socket}` if the IP address and port number are valid, returns
+  `{:error, reason}` otherwise. A valid IP address is anything that can be
+  parsed by `:inet.parse_address/1`, and a valid port must be an integer in the
+  range of `#{inspect @valid_ports}`.
 
   ## Examples
 
-      iex> {:ok, socket_address} = SocketAddress.new("127.0.0.1", 80)
-      iex> socket_address
+      iex> {:ok, socket} = SocketAddress.new("127.0.0.1", 80)
+      iex> socket
       #SocketAddress<127.0.0.1:80>
 
-      iex> {:ok, socket_address} = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
-      iex> socket_address
+      iex> {:ok, socket} = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
+      iex> socket
       #SocketAddress<[FE80::204:ACFF:FE17:BF38]:80>
-      iex> socket_address.ip
+      iex> socket.ip
       {65152, 0, 0, 0, 516, 44287, 65047, 48952}
-      iex> socket_address.port
+      iex> socket.port
       80
 
       iex> SocketAddress.new("100.200.300.400", 80)
@@ -95,17 +95,17 @@ end
 defimpl Inspect, for: SocketAddress do
   import Inspect.Algebra
 
-  def inspect(socket_address, _opts) do
-    surround("#SocketAddress<", "#{socket_address}", ">")
+  def inspect(socket, _opts) do
+    surround("#SocketAddress<", "#{socket}", ">")
   end
 end
 
 
 defimpl String.Chars, for: SocketAddress do
-  def to_string(socket_address) do
-    case tuple_size(socket_address.ip) do
-      4 -> "#{:inet.ntoa(socket_address.ip)}:#{socket_address.port}"
-      8 -> "[#{:inet.ntoa(socket_address.ip)}]:#{socket_address.port}"
+  def to_string(socket) do
+    case tuple_size(socket.ip) do
+      4 -> "#{:inet.ntoa(socket.ip)}:#{socket.port}"
+      8 -> "[#{:inet.ntoa(socket.ip)}]:#{socket.port}"
     end
   end
 end
