@@ -20,6 +20,10 @@ defmodule SocketAddress.Mixfile do
         ],
       ],
 
+      # Hex.pm
+      description: description(),
+      package: package(),
+
       # Tests
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [coveralls: :test],
@@ -37,6 +41,20 @@ defmodule SocketAddress.Mixfile do
       {:ex_doc, "~> 0.14", only: :dev},
 
       {:excoveralls, "~> 0.5", only: :test},
+    ]
+  end
+
+  defp description() do
+    """
+    An Elixir convenience library for manipulating Internet socket addresses.
+    """
+  end
+
+  defp package() do
+    [
+      licenses: ["ISC"],
+      maintainers: ["Aaron Bull Schaefer"],
+      links: %{"GitHub" => "https://github.com/elasticdog/socket_address"}
     ]
   end
 end

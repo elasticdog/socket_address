@@ -1,7 +1,7 @@
 Socket Address
 ==============
 
-An [Elixir][] convenience library to parse Internet socket addresses.
+An [Elixir][] convenience library for manipulating Internet socket addresses.
 
 [![Build Status](https://travis-ci.org/elasticdog/socket_address.svg?branch=master)](https://travis-ci.org/elasticdog/socket_address)
 [![Coverage Status](https://coveralls.io/repos/github/elasticdog/socket_address/badge.svg?branch=master)](https://coveralls.io/github/elasticdog/socket_address?branch=master)
