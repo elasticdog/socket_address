@@ -2,9 +2,16 @@ defmodule SocketAddress do
   @moduledoc """
   Defines an Internet socket address.
 
-  A *socket address* is the combination of an IP address and a port number.
-  This can be used along with a transport protocol in order to define an
-  endpoint of a connection across a network.
+  The SocketAddress struct contains the fields `ip` (stored as a tuple) and
+  `port`, which can be accessed directly:
+
+      iex> {:ok, socket_address} = SocketAddress.new("127.0.0.1", 80)
+      iex> socket_address
+      #SocketAddress<127.0.0.1:80>
+      iex> socket_address.ip
+      {127, 0, 0, 1}
+      iex> socket_address.port
+      80
   """
 
   @typedoc "The IP address of a socket"
@@ -24,23 +31,26 @@ defmodule SocketAddress do
   @doc """
   Creates a new socket address with the given `ip` and `port`.
 
-  Returns a socket address if the IP address and port number are valid, returns
-  `{:error, reason}` otherwise. A valid IP address is anything that can be
-  parsed by `:inet.parse_address/1`, and a valid port must be an integer in the
-  range of `#{inspect @valid_ports}`.
+  Returns `{:ok, socket_address}` if the IP address and port number are valid,
+  returns `{:error, reason}` otherwise. A valid IP address is an IPv4 or IPv6
+  address that can be parsed by `:inet.parse_address/1`, and a valid port must
+  be an integer in the range of `#{inspect @valid_ports}`.
 
   ## Examples
 
-      iex> SocketAddress.new("127.0.0.1", 80)
+      iex> {:ok, socket_address} = SocketAddress.new("127.0.0.1", 80)
+      iex> socket_address
+      #SocketAddress<127.0.0.1:80>
+      iex> {:ok, socket_address} = SocketAddress.new('127.0.0.1', 80)
+      iex> socket_address
+      #SocketAddress<127.0.0.1:80>
+      iex> {:ok, socket_address} = SocketAddress.new({127, 0, 0, 1}, 80)
+      iex> socket_address
       #SocketAddress<127.0.0.1:80>
 
-      iex> socket = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
-      iex> socket
+      iex> {:ok, socket_address} = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
+      iex> socket_address
       #SocketAddress<[FE80::204:ACFF:FE17:BF38]:80>
-      iex> socket.ip
-      {65152, 0, 0, 0, 516, 44287, 65047, 48952}
-      iex> socket.port
-      80
 
       iex> SocketAddress.new("100.200.300.400", 80)
       {:error, :invalid_ip}
@@ -49,7 +59,7 @@ defmodule SocketAddress do
       {:error, :invalid_port}
   """
   @spec new(ip_address, port_number) ::
-    t |
+    {:ok, t} |
     {:error, :invalid_ip | :invalid_port}
   def new(ip, port) do
     ip_address = parse(ip)
@@ -60,7 +70,7 @@ defmodule SocketAddress do
       Enum.member?(@valid_ports, port) == false ->
         {:error, :invalid_port}
       true ->
-        %SocketAddress{ip: ip_address, port: port}
+        {:ok, %SocketAddress{ip: ip_address, port: port}}
     end
   end
 
@@ -94,17 +104,17 @@ end
 defimpl Inspect, for: SocketAddress do
   import Inspect.Algebra
 
-  def inspect(socket, _opts) do
-    surround("#SocketAddress<", "#{socket}", ">")
+  def inspect(socket_address, _opts) do
+    surround("#SocketAddress<", "#{socket_address}", ">")
   end
 end
 
 
 defimpl String.Chars, for: SocketAddress do
-  def to_string(socket) do
-    case tuple_size(socket.ip) do
-      4 -> "#{:inet.ntoa(socket.ip)}:#{socket.port}"
-      8 -> "[#{:inet.ntoa(socket.ip)}]:#{socket.port}"
+  def to_string(socket_address) do
+    case tuple_size(socket_address.ip) do
+      4 -> "#{:inet.ntoa(socket_address.ip)}:#{socket_address.port}"
+      8 -> "[#{:inet.ntoa(socket_address.ip)}]:#{socket_address.port}"
     end
   end
 end
