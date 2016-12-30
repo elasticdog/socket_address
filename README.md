@@ -66,6 +66,15 @@ iex> SocketAddress.new("0.0.0.0", 99999)
 {:error, :invalid_port}
 ```
 
+Contributing
+------------
+
+Socket Address welcomes contributions from everyone. If you're thinking of
+helping out, please read the [guidelines for contributing][contributing] to the
+project.
+
+[contributing]: https://github.com/elasticdog/socket_address/blob/master/CONTRIBUTING.md
+
 License
 -------
 

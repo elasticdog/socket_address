@@ -14,7 +14,10 @@ defmodule SocketAddress.Mixfile do
       name: "Socket Address",
       docs: [
         main: "readme",
-        extras: ["README.md": [title: "README"]],
+        extras: [
+          "README.md": [title: "README"],
+          "CONTRIBUTING.md": [title: "Contributing"],
+        ],
       ],
 
       # Tests
