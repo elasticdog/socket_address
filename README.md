@@ -1,7 +1,7 @@
-Socket
-======
+Socket Address
+==============
 
-An [Elixir][] convenience library to define an Internet socket address.
+An [Elixir][] convenience library to parse Internet socket addresses.
 
 [Elixir]: http://elixir-lang.org/
 
@@ -34,10 +34,10 @@ passed in as the tuple:
 
 ### The Solution
 
-The Socket library helps ease the mental burden of figuring out Cowboy's
-required tuple format by generating it for you based on normal IP address
-strings. It sanity checks both the IP address and port number you give, and
-then packages it into a struct for use when setting your listener options.
+The Socket Address library helps ease the mental burden of figuring out
+Cowboy's required tuple format by generating it for you based on normal IP
+address strings. It sanity checks both the IP address and port number you give,
+and then packages it into a struct for use when setting your listener options.
 
 It's essentially a thin wrapper around the Erlang [`:inet.parse_address/1`][]
 function.
@@ -48,29 +48,29 @@ Usage
 -----
 
 ```elixir
-iex> {:ok, socket} = Socket.new("127.0.0.1", 80)
-iex> socket
-#Socket<127.0.0.1:80>
+iex> {:ok, socket_address} = SocketAddress.new("127.0.0.1", 80)
+iex> socket_address
+#SocketAddress<127.0.0.1:80>
 
-iex> {:ok, socket} = Socket.new("fe80::204:acff:fe17:bf38", 80)
-iex> socket
+iex> {:ok, socket_address} = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
+iex> socket_address
 #Socket<[FE80::204:ACFF:FE17:BF38]:80>
-iex> socket.ip
+iex> socket_address.ip
 {65152, 0, 0, 0, 516, 44287, 65047, 48952}
-iex> socket.port
+iex> socket_address.port
 80
 
-iex> Socket.new("100.200.300.400", 80)
+iex> SocketAddress.new("100.200.300.400", 80)
 {:error, :invalid_ip_address}
 
-iex> Socket.new("0.0.0.0", 99999)
+iex> SocketAddress.new("0.0.0.0", 99999)
 {:error, :invalid_port}
 ```
 
 License
 -------
 
-Socket is provided under the terms of the
+Socket Address is provided under the terms of the
 [ISC License](https://en.wikipedia.org/wiki/ISC_license).
 
 Copyright &copy; 2016, [Aaron Bull Schaefer](mailto:aaron@elasticdog.com).

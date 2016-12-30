@@ -1,9 +1,9 @@
-defmodule Socket.Mixfile do
+defmodule SocketAddress.Mixfile do
   use Mix.Project
 
   def project() do
     [
-      app: :socket,
+      app: :socket_address,
       version: "0.1.0",
       elixir: "~> 1.3",
       build_embedded: Mix.env == :prod,
@@ -11,7 +11,7 @@ defmodule Socket.Mixfile do
       deps: deps(),
 
       # Docs
-      name: "Socket",
+      name: "Socket Address",
       docs: [
         main: "readme",
         extras: ["README.md": [title: "README"]],
