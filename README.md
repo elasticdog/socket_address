@@ -107,4 +107,4 @@ License
 Socket Address is provided under the terms of the
 [ISC License](https://en.wikipedia.org/wiki/ISC_license).
 
-Copyright &copy; 2016, [Aaron Bull Schaefer](mailto:aaron@elasticdog.com).
+Copyright &copy; 2016-2017, [Aaron Bull Schaefer](mailto:aaron@elasticdog.com).
