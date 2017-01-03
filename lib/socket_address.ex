@@ -98,6 +98,33 @@ defmodule SocketAddress do
     end
   end
   defp parse(_), do: nil
+
+  @doc """
+  Converts a socket address to an options keyword list.
+
+  Returns a keyword list of the socket address `ip` and `port` fields merged
+  with any provided `opts`. All keys, including duplicated keys, given in
+  `opts` will be added to the socket address fields, overriding any existing
+  one.
+
+  ## Examples
+
+      iex> {:ok, socket_address} = SocketAddress.new("127.0.0.1", 80)
+      iex> SocketAddress.to_opts(socket_address)
+      [ip: {127, 0, 0, 1}, port: 80]
+
+      iex> {:ok, socket_address} = SocketAddress.new("127.0.0.1", 80)
+      iex> SocketAddress.to_opts(socket_address, [compress: true])
+      [ip: {127, 0, 0, 1}, port: 80, compress: true]
+
+      iex> {:ok, socket_address} = SocketAddress.new("127.0.0.1", 80)
+      iex> SocketAddress.to_opts(socket_address, [port: 8888])
+      [ip: {127, 0, 0, 1}, port: 8888]
+  """
+  @spec to_opts(t, Keyword.t) :: Keyword.t
+  def to_opts(%SocketAddress{ip: ip, port: port}, opts \\ []) do
+    Keyword.merge([ip: ip, port: port], opts)
+  end
 end
 
 

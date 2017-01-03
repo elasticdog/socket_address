@@ -20,6 +20,8 @@ iex> socket_address.ip
 {127, 0, 0, 1}
 iex> socket_address.port
 80
+iex> SocketAddress.to_opts(socket_address, [compress: true])
+[ip: {127, 0, 0, 1}, port: 80, compress: true]
 
 iex> {:ok, socket_address} = SocketAddress.new("fe80::204:acff:fe17:bf38", 80)
 iex> socket_address
