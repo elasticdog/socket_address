@@ -12,6 +12,8 @@ defmodule SocketAddress.Mixfile do
 
       # Docs
       name: "Socket Address",
+      source_url: "https://github.com/elasticdog/socket_address",
+      homepage_url: "https://github.com/elasticdog/socket_address",
       docs: [
         main: "readme",
         extras: [
