@@ -5,7 +5,7 @@ defmodule SocketAddress.Mixfile do
     [
       app: :socket_address,
       version: "0.2.0",
-      elixir: "~> 1.4",
+      elixir: "~> 1.3",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       deps: deps(),
@@ -33,7 +33,7 @@ defmodule SocketAddress.Mixfile do
   end
 
   def application() do
-    [extra_applications: [:logger]]
+    [applications: [:logger]]
   end
 
   defp deps() do
